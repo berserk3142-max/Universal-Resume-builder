@@ -1,0 +1,68 @@
+// Prisma Schema for Universal Resume Builder
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String?  @unique
+  email     String?  @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  resumes   Resume[]
+}
+
+model Resume {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isActive  Boolean  @default(true)
+
+  // Personal Info
+  fullName  String
+  phone     String?
+  email     String?
+  location  String?
+  photo     String?  @db.Text // Base64 or URL
+  summary   String?  @db.Text
+
+  // JSON fields for flexible data
+  experience Json? // Array of work experiences
+  education  Json? // Array of education
+  skills     Json? // Array of skills
+  languages  Json? // Array of languages
+  portfolio  Json? // Array of portfolio items (photos/videos)
+
+  // Metadata
+  template String @default("professional")
+
+  versions Version[]
+  comments Comment[]
+}
+
+model Version {
+  id        String   @id @default(uuid())
+  resumeId  String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  data      Json     // Snapshot of resume data
+  createdAt DateTime @default(now())
+  note      String?
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  resumeId  String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  content   String   @db.Text
+  author    String?
+  createdAt DateTime @default(now())
+}
