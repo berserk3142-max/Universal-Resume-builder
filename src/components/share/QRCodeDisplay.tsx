@@ -32,24 +32,40 @@ export default function QRCodeDisplay({ resumeId, fullName }: QRCodeDisplayProps
         const svg = qrRef.current.querySelector('svg');
         if (!svg) return;
 
-        const svgData = new XMLSerializer().serializeToString(svg);
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
+        try {
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
 
-        img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx?.drawImage(img, 0, 0);
-            const pngFile = canvas.toDataURL('image/png');
+            // Set canvas size for high quality
+            canvas.width = 360;
+            canvas.height = 360;
 
-            const downloadLink = document.createElement('a');
-            downloadLink.download = `${fullName || 'resume'}_qrcode.png`;
-            downloadLink.href = pngFile;
-            downloadLink.click();
-        };
+            img.onload = () => {
+                if (ctx) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                }
+                const pngFile = canvas.toDataURL('image/png');
 
-        img.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+                const downloadLink = document.createElement('a');
+                downloadLink.download = `${fullName || 'resume'}_qrcode.png`;
+                downloadLink.href = pngFile;
+                downloadLink.click();
+            };
+
+            img.onerror = () => {
+                console.error('Failed to load QR code image');
+            };
+
+            // Use encodeURIComponent to handle Unicode characters properly
+            const encodedSvg = encodeURIComponent(svgData);
+            img.src = 'data:image/svg+xml;charset=utf-8,' + encodedSvg;
+        } catch (error) {
+            console.error('Error downloading QR code:', error);
+        }
     };
 
     return (
