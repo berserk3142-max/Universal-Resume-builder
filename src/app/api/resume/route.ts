@@ -40,7 +40,8 @@ export async function POST(request: NextRequest) {
 
         const resume = await prisma.resume.create({
             data: {
-                userId: userId || null, // Associate with user if authenticated
+                // Note: userId is not set as Clerk IDs don't match database User IDs
+                // To properly link resumes to users, create a User record first with clerkId
                 fullName: data.fullName,
                 phone: data.phone || null,
                 email: data.email || null,
