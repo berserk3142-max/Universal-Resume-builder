@@ -4,11 +4,12 @@ import prisma from '@/lib/prisma';
 // GET - Fetch single resume
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const resume = await prisma.resume.findUnique({
-            where: { id: params.id },
+            where: { id },
             include: {
                 versions: {
                     orderBy: { createdAt: 'desc' },
@@ -40,14 +41,15 @@ export async function GET(
 // PUT - Update resume
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const data = await request.json();
 
         // Update resume
         const resume = await prisma.resume.update({
-            where: { id: params.id },
+            where: { id },
             data: {
                 fullName: data.fullName,
                 phone: data.phone || null,
@@ -86,11 +88,12 @@ export async function PUT(
 // DELETE - Soft delete resume
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         await prisma.resume.update({
-            where: { id: params.id },
+            where: { id },
             data: { isActive: false },
         });
 

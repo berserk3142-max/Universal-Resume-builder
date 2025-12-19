@@ -3,7 +3,7 @@ import prisma from '@/lib/prisma';
 import Link from 'next/link';
 
 interface PageProps {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }
 
 async function getResume(id: string) {
@@ -18,7 +18,8 @@ async function getResume(id: string) {
 }
 
 export default async function PublicResumePage({ params }: PageProps) {
-    const resume = await getResume(params.id);
+    const { id } = await params;
+    const resume = await getResume(id);
 
     if (!resume) {
         notFound();
@@ -235,7 +236,8 @@ export default async function PublicResumePage({ params }: PageProps) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-    const resume = await getResume(params.id);
+    const { id } = await params;
+    const resume = await getResume(id);
 
     if (!resume) {
         return { title: 'Resume Not Found' };
