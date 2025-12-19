@@ -16,6 +16,10 @@ export default function AnimatedBackground() {
         let animationId: number;
         let particles: Particle[] = [];
 
+        // Canvas dimensions (captured after null check)
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
         // Particle class
         class Particle {
             x: number;
@@ -26,10 +30,14 @@ export default function AnimatedBackground() {
             color: string;
             alpha: number;
             pulse: number;
+            canvasW: number;
+            canvasH: number;
 
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
+            constructor(width: number, height: number) {
+                this.canvasW = width;
+                this.canvasH = height;
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
                 this.size = Math.random() * 3 + 1;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
@@ -50,16 +58,21 @@ export default function AnimatedBackground() {
                 return colors[Math.floor(Math.random() * colors.length)];
             }
 
+            updateDimensions(width: number, height: number) {
+                this.canvasW = width;
+                this.canvasH = height;
+            }
+
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
                 this.pulse += 0.02;
 
                 // Wrap around screen
-                if (this.x < 0) this.x = canvas.width;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.y < 0) this.y = canvas.height;
-                if (this.y > canvas.height) this.y = 0;
+                if (this.x < 0) this.x = this.canvasW;
+                if (this.x > this.canvasW) this.x = 0;
+                if (this.y < 0) this.y = this.canvasH;
+                if (this.y > this.canvasH) this.y = 0;
             }
 
             draw() {
@@ -74,6 +87,7 @@ export default function AnimatedBackground() {
             }
         }
 
+
         // Initialize
         const resize = () => {
             canvas.width = window.innerWidth;
@@ -85,7 +99,7 @@ export default function AnimatedBackground() {
             particles = [];
             const particleCount = Math.min(150, Math.floor((canvas.width * canvas.height) / 10000));
             for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
+                particles.push(new Particle(canvas.width, canvas.height));
             }
         };
 
