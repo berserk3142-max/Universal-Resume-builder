@@ -41,12 +41,28 @@ export interface PortfolioItem {
     description?: string;
 }
 
+export interface Project {
+    id: string;
+    title: string;
+    description: string;
+    startDate?: string;
+    endDate?: string;
+    techStack?: string;
+}
+
+export interface Achievement {
+    id: string;
+    title: string;
+    description?: string;
+}
+
 export interface ResumeData {
     id?: string;
     fullName: string;
     phone?: string;
     email?: string;
     location?: string;
+    linkedin?: string;
     photo?: string;
     summary?: string;
     experience: Experience[];
@@ -54,6 +70,8 @@ export interface ResumeData {
     skills: Skill[];
     languages: Language[];
     portfolio: PortfolioItem[];
+    projects: Project[];
+    achievements: Achievement[];
     template: string;
 }
 
@@ -89,6 +107,7 @@ export const defaultResumeData: ResumeData = {
     phone: '',
     email: '',
     location: '',
+    linkedin: '',
     photo: '',
     summary: '',
     experience: [],
@@ -96,5 +115,7 @@ export const defaultResumeData: ResumeData = {
     skills: [],
     languages: [],
     portfolio: [],
+    projects: [],
+    achievements: [],
     template: 'professional',
 };

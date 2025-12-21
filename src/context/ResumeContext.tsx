@@ -82,6 +82,7 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
                 phone: resume.phone || '',
                 email: resume.email || '',
                 location: resume.location || '',
+                linkedin: resume.linkedin || '',
                 photo: resume.photo || '',
                 summary: resume.summary || '',
                 experience: resume.experience || [],
@@ -89,6 +90,8 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
                 skills: resume.skills || [],
                 languages: resume.languages || [],
                 portfolio: resume.portfolio || [],
+                projects: resume.projects || [],
+                achievements: resume.achievements || [],
                 template: resume.template || 'professional',
             });
             setCurrentResumeId(id);
