@@ -40,23 +40,23 @@ function BuilderContent() {
     };
 
     const inputModes = [
-        { id: 'form', label: 'Form', icon: '📝' },
-        { id: 'chat', label: 'Chat', icon: '💬' },
-        { id: 'voice', label: 'Voice', icon: '🎙️' },
-        { id: 'image', label: 'Upload', icon: '📷' },
+        { id: 'form', label: 'Form', icon: '📝', color: 'bg-neo-blue' },
+        { id: 'chat', label: 'Chat', icon: '💬', color: 'bg-neo-purple' },
+        { id: 'voice', label: 'Voice', icon: '🎙️', color: 'bg-neo-orange' },
+        { id: 'image', label: 'Upload', icon: '📷', color: 'bg-neo-green' },
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div className="min-h-screen bg-neo-cream">
             {/* Header */}
-            <header className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-sm sticky top-0 z-40">
+            <header className="bg-neo-yellow border-b-3 border-black sticky top-0 z-40">
                 <div className="container mx-auto px-4 py-3">
                     <div className="flex items-center justify-between">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-gradient-to-br from-bharat-saffron to-bharat-green rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">R</span>
+                            <div className="w-10 h-10 bg-neo-cyan border-2 border-black shadow-neo-sm flex items-center justify-center rounded-md">
+                                <span className="text-black font-bold text-lg font-display">R</span>
                             </div>
-                            <span className="text-lg font-display font-bold text-white">
+                            <span className="text-xl font-display font-bold text-black">
                                 Resume<span className="text-bharat-saffron">Kraft</span>
                             </span>
                         </Link>
@@ -65,17 +65,17 @@ function BuilderContent() {
                             <button
                                 onClick={handleSave}
                                 disabled={!resumeData.fullName || isLoading}
-                                className="btn-primary text-sm py-2 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="btn-neo-primary text-sm py-2 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {saveStatus === 'saving' ? (
                                     <>
-                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                        <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
                                         Saving...
                                     </>
                                 ) : saveStatus === 'saved' ? (
                                     <>
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                         </svg>
                                         Saved!
                                     </>
@@ -92,7 +92,7 @@ function BuilderContent() {
                             {currentResumeId && (
                                 <button
                                     onClick={() => setShowQR(true)}
-                                    className="btn-outline text-sm py-2 flex items-center gap-2"
+                                    className="btn-neo-outline text-sm py-2 flex items-center gap-2"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
@@ -106,7 +106,7 @@ function BuilderContent() {
                                 afterSignOutUrl="/"
                                 appearance={{
                                     elements: {
-                                        avatarBox: 'w-9 h-9 ring-2 ring-primary-500/50',
+                                        avatarBox: 'w-9 h-9 border-2 border-black shadow-neo-sm',
                                     }
                                 }}
                             />
@@ -121,14 +121,14 @@ function BuilderContent() {
                     {/* Left Panel - Input */}
                     <div className="flex flex-col overflow-hidden">
                         {/* Mode Tabs */}
-                        <div className="flex gap-2 mb-4 p-1 bg-slate-800/50 rounded-xl">
+                        <div className="flex gap-2 mb-4 p-2 bg-white border-2 border-black rounded-md">
                             {inputModes.map((mode) => (
                                 <button
                                     key={mode.id}
                                     onClick={() => setInputMode(mode.id as InputMode)}
-                                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg font-medium transition-all ${inputMode === mode.id
-                                        ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg'
-                                        : 'text-gray-400 hover:text-white hover:bg-slate-700'
+                                    className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md font-bold transition-all border-2 border-black ${inputMode === mode.id
+                                            ? `${mode.color} shadow-neo-md -translate-x-0.5 -translate-y-0.5`
+                                            : 'bg-white hover:bg-neo-cream'
                                         }`}
                                 >
                                     <span>{mode.icon}</span>
@@ -138,7 +138,7 @@ function BuilderContent() {
                         </div>
 
                         {/* Input Component */}
-                        <div className="flex-1 overflow-hidden">
+                        <div className="flex-1 overflow-hidden card-neo p-0">
                             {inputMode === 'form' && <FormInput />}
                             {inputMode === 'chat' && <ChatInput />}
                             {inputMode === 'voice' && <VoiceInput />}
@@ -155,8 +155,8 @@ function BuilderContent() {
 
             {/* Mobile Preview Button */}
             <div className="lg:hidden fixed bottom-6 right-6">
-                <button className="w-14 h-14 bg-primary-500 rounded-full flex items-center justify-center shadow-lg hover:bg-primary-600 transition-colors">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button className="w-14 h-14 bg-neo-cyan border-2 border-black shadow-neo-md rounded-md flex items-center justify-center hover:shadow-neo-lg hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all">
+                    <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                     </svg>
@@ -165,26 +165,28 @@ function BuilderContent() {
 
             {/* QR Code Modal */}
             {showQR && currentResumeId && (
-                <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4" onClick={() => setShowQR(false)}>
+                <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={() => setShowQR(false)}>
                     <div onClick={(e) => e.stopPropagation()} className="max-w-md w-full">
                         <div className="flex justify-end mb-2">
                             <button
                                 onClick={() => setShowQR(false)}
-                                className="text-gray-400 hover:text-white transition-colors"
+                                className="w-10 h-10 bg-white border-2 border-black shadow-neo-sm rounded-md flex items-center justify-center hover:bg-neo-pink transition-colors"
                             >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-                        <QRCodeDisplay resumeId={currentResumeId} fullName={resumeData.fullName} />
+                        <div className="bg-white border-3 border-black shadow-neo-xl rounded-md p-6">
+                            <QRCodeDisplay resumeId={currentResumeId} fullName={resumeData.fullName} />
+                        </div>
                     </div>
                 </div>
             )}
 
             {/* Error Toast */}
             {saveStatus === 'error' && (
-                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg z-50">
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-neo-red border-2 border-black shadow-neo-md text-black font-bold px-6 py-3 rounded-md z-50">
                     Failed to save resume. Please try again.
                 </div>
             )}
@@ -194,10 +196,10 @@ function BuilderContent() {
 
 function BuilderLoading() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-            <div className="text-center">
-                <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-                <p className="text-white">Loading builder...</p>
+        <div className="min-h-screen bg-neo-cream flex items-center justify-center">
+            <div className="card-neo text-center">
+                <div className="w-12 h-12 border-4 border-black border-t-neo-cyan rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-black font-bold">Loading builder...</p>
             </div>
         </div>
     );
