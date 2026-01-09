@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from 'next/font/google'
+import { Big_Shoulders_Display } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 
@@ -12,6 +13,12 @@ const inter = Inter({
 const outfit = Outfit({
     subsets: ['latin'],
     variable: '--font-outfit',
+    display: 'swap',
+})
+
+const bigShoulders = Big_Shoulders_Display({
+    subsets: ['latin'],
+    variable: '--font-big-shoulders',
     display: 'swap',
 })
 
@@ -34,7 +41,7 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider>
-            <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+            <html lang="en" className={`${inter.variable} ${outfit.variable} ${bigShoulders.variable}`}>
                 <body className="antialiased">
                     {children}
                 </body>
